@@ -1,19 +1,16 @@
 #!/usr/bin/python
+import config
 from trakttv import TraktTV
 from torrentsearch import ThePirateBay
 from transmission import Transmission
 from datetime import datetime
 
-CLIENT_ID = 'XXXX'
-CLIENT_SECRET = 'YYYY'
-TRANSMISSION = 'http://localhost:8081'
-
 try:
-	trakt = TraktTV(CLIENT_ID, CLIENT_SECRET)
+	trakt = TraktTV(config.CLIENT_ID, config.CLIENT_SECRET)
 	trakt.login()
 	calendar = trakt.calendar(1)
 
-	transmission = Transmission(TRANSMISSION)
+	transmission = Transmission(config.TRANSMISSION)
 	for item in calendar:
 		id = item['show']['ids']['trakt']
 		season = ('0' + str(item['episode']['season']))[-2:]
