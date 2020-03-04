@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import config
 from trakttv import TraktTV
-from torrentsearch import ThePirateBay
+import torrentsearch
 from transmission import Transmission
 from datetime import datetime
 
@@ -21,7 +21,7 @@ try:
 		
 		if (collected == False):
 			searchStr = '{title} S{season}E{episode}'.format(title=item['show']['title'], season=season, episode=number)
-			torrents = ThePirateBay.search(searchStr, '720p')
+			torrents = torrentsearch.search(searchStr + ' 720p')
 			if (len(torrents) > 0 and transmission.addTorrent(torrents[0]['magnet'])):
 				info = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 				info = info + '    Added: ' + torrents[0]['title']
