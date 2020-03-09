@@ -1,3 +1,5 @@
 CLIENT_ID = 'xxx'
 CLIENT_SECRET = 'yyy'
 TRANSMISSION = 'http://localhost:8081'
+PUSHOVER_USER = 'xxxxx'
+PUSHOVER_APP = 'yyyyy'
