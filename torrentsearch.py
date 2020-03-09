@@ -16,24 +16,21 @@ class Util:
 	@staticmethod
 	def getHTMLContent(url):
 		from urllib2 import Request, urlopen, HTTPError, URLError
+		import socket
 		
 		user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
 		headers = {'User-Agent':user_agent} 
 		request = Request(url, None, headers)
 		try:
-			return urlopen(request).read()
-		#except HTTPError as e:
-		except URLError as e:
-			return ""
-		except HTTPError as e:
-			#print e
+			return urlopen(request, timeout=4).read()
+		except:
 			return ""
 			
 class ThePirateBay:
 	@staticmethod
 	def search(search):
 		from urllib import quote_plus
-		
+				
 		content = Util.getHTMLContent("https://thepiratebay.org/search/" + quote_plus(search) + "/0/99/0")
 		
 		regexSearchResult = "<table id=\"searchResult\">(.|\n)*?<\/table>"
@@ -45,9 +42,17 @@ class MagnetDL:
 	@staticmethod
 	def search(search):
 		from urllib import quote_plus
+		import re
 		
+		hiddenFields = ""
+		mainPage = Util.getHTMLContent("https://www.magnetdl.com")
+		regex = r'<input type="hidden" name="(.*)" value="(.*)" \/>'
+		matches = re.finditer(regex, mainPage, re.MULTILINE)
+		for matchNum, match in enumerate(matches, start=1):    
+			hiddenFields = hiddenFields + "&" + match.group(1) + "=" + match.group(2)
+			
 		search = search.replace(" ", "-");
-		content = Util.getHTMLContent("https://www.magnetdl.com/n/" + quote_plus(search) + "/se/desc/")
+		content = Util.getHTMLContent("https://www.magnetdl.com/search/?q=" + quote_plus(search) + hiddenFields)
 		
 		regexSearchResult = "<table class=\"download\">(.|\n)*?<\/table>"
 		regexLinks =  r"(\"(magnet:.*?)\")((.|\n)*?) (title=\"((.|\n)*?)\") title=\"((.|\n)*?)\""

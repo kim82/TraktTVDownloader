@@ -2,6 +2,7 @@
 import config
 from trakttv import TraktTV
 import torrentsearch
+from pushover import Pushover
 from transmission import Transmission
 from datetime import datetime
 
@@ -30,6 +31,9 @@ try:
 					info = info + ' - Collected at Trakt.TV'
 				
 				print info
+			else:
+				Pushover.send(config.PUSHOVER_USER, config.PUSHOVER_APP, 'No torrents found for ' + searchStr, 'Trakt TV Downloader')
+				print 'No torrents found for ' + searchStr
 				
 except Exception as e:
 	print e
