@@ -29,9 +29,9 @@ class Util:
 class ThePirateBay:
 	@staticmethod
 	def search(search):
-		from urllib import quote_plus
+		from urllib import quote
 				
-		content = Util.getHTMLContent("https://thepiratebay.org/search/" + quote_plus(search) + "/0/99/0")
+		content = Util.getHTMLContent("https://tpb.party/search/" + quote(search) + "/0/99/0")
 		
 		regexSearchResult = "<table id=\"searchResult\">(.|\n)*?<\/table>"
 		regexLinks = r"(class=\"detLink\"(.|\n)*?>)((.|\n)*?)(</a>)((.|\n)*?)(href=\"((.|\n)*?)\")"
