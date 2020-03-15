@@ -11,7 +11,7 @@ try:
 	trakt.login()
 	calendar = trakt.calendar(1)
 
-	transmission = Transmission(config.TRANSMISSION)
+	transmission = Transmission(config.TRANSMISSION, config.TRANSMISSION_USER, config.TRANSMISSION_PWD)
 	for item in calendar:
 		id = item['show']['ids']['trakt']
 		season = ('0' + str(item['episode']['season']))[-2:]
