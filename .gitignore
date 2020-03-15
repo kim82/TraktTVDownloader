@@ -1,3 +1,4 @@
 trakt.auth
 config.py
 *.pyc
+*.db
